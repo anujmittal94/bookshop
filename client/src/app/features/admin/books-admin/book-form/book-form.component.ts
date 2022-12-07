@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BookKey } from 'src/app/core/models/book-key.model';
-import { Book } from 'src/app/core/models/book.model';
 import { BooksService } from 'src/app/core/services/books.service';
 
 @Component({

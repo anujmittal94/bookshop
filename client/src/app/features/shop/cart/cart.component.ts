@@ -1,15 +1,11 @@
-import {
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Observable } from 'rxjs';
 import { BookKey } from 'src/app/core/models/book-key.model';
-import { Book } from 'src/app/core/models/book.model';
 import { CartItem } from 'src/app/core/models/cart.model';
 import { CartService } from 'src/app/core/services/cart.service';
+import { loadStripe } from '@stripe/stripe-js';
+import { environment } from 'src/environments/environment';
+import { PgsService } from 'src/app/core/services/pgs.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,8 +14,12 @@ import { CartService } from 'src/app/core/services/cart.service';
 })
 export class CartComponent implements OnInit, OnChanges {
   items?: Observable<CartItem[]>;
+  showSpinner: boolean = false;
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private pgsService: PgsService
+  ) {}
 
   ngOnInit(): void {
     this.items = this.cartService.cart;
@@ -50,5 +50,20 @@ export class CartComponent implements OnInit, OnChanges {
       return this.cartService.getTotal(items);
     }
     return 0;
+  }
+
+  checkoutst(items: CartItem[]) {
+    this.showSpinner = true;
+    this.pgsService.checkoutst(items).subscribe(async (res: any) => {
+      let stripe = await loadStripe(environment.stripe_public);
+      stripe?.redirectToCheckout({
+        sessionId: res.id,
+      });
+      console.log(res);
+      this.showSpinner = false;
+    });
+  }
+  checkoutrp(items: CartItem[]) {
+    this.pgsService.checkoutrp();
   }
 }

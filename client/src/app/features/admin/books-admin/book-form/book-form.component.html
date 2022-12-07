@@ -123,6 +123,11 @@
           >
         </div>
       </div>
+      <small
+        *ngIf="!bookForm?.valid && bookForm?.touched"
+        class="form-text text-danger w-100"
+        >Please enter a valid title and price.</small
+      >
       <div class="row mt-3 justify-content-end">
         <ng-container *ngIf="editBookStatus; else createForm">
           <button

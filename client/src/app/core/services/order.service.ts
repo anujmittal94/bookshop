@@ -42,7 +42,9 @@ export class OrderService {
   completeOrder(key: string, order: Order): Observable<any> {
     return this.http
       .put<Order>(`${environment.firebase_db_url}/orders/${key}.json`, order)
-      .pipe(tap((_) => this.toastrService.success('Order marked complete')));
+      .pipe(
+        tap((_) => this.toastrService.success(`Order ${key} marked complete`))
+      );
   }
 
   // deleteOrder(key: string): Observable<any> {

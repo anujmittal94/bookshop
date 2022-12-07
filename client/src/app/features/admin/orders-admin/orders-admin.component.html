@@ -37,7 +37,14 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let order of pendingOrders | async">
+          <ng-container
+            *ngFor="
+              let order of pendingOrders
+                | async
+                | paginate
+                  : { id: 'pcontrols', itemsPerPage: 5, currentPage: pp }
+            "
+          >
             <tr>
               <td>{{ order.key }}</td>
               <td>{{ order.date }}</td>
@@ -97,6 +104,7 @@
         </tbody>
       </table>
       <pagination-controls
+        id="pcontrols"
         (pageChange)="pp = $event"
         class="text-center"
       ></pagination-controls>
@@ -114,7 +122,14 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngFor="let order of completedOrders | async">
+          <ng-container
+            *ngFor="
+              let order of completedOrders
+                | async
+                | paginate
+                  : { id: 'ccontrols', itemsPerPage: 5, currentPage: pc }
+            "
+          >
             <tr>
               <td>{{ order.key }}</td>
               <td>{{ order.date }}</td>
@@ -167,6 +182,7 @@
         </tbody>
       </table>
       <pagination-controls
+        id="ccontrols"
         (pageChange)="pc = $event"
         class="text-center"
       ></pagination-controls>

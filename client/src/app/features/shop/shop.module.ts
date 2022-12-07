@@ -9,9 +9,9 @@ import { BookCardComponent } from './book-card/book-card.component';
 import { BannersComponent } from './banners/banners.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { AddressComponent } from './checkout/address/address.component';
-import { PaymentComponent } from './checkout/payment/payment.component';
-import { CartSummaryComponent } from './checkout/cart-summary/cart-summary.component';
+import { SuccessComponent } from './checkout/success/success.component';
+import { CancelComponent } from './checkout/cancel/cancel.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -21,9 +21,9 @@ import { CartSummaryComponent } from './checkout/cart-summary/cart-summary.compo
     BookCardComponent,
     BannersComponent,
     CheckoutComponent,
-    AddressComponent,
-    PaymentComponent,
-    CartSummaryComponent,
+    SuccessComponent,
+    CancelComponent,
+    TestComponent,
   ],
   imports: [CommonModule, ShopRoutingModule, SharedModule],
 })

@@ -9,8 +9,8 @@ import { OrderService } from 'src/app/core/services/order.service';
 })
 export class OrdersAdminComponent implements OnInit {
   completedOrders?: Observable<any>;
-  pc: number = 1;
   pendingOrders?: Observable<any>;
+  pc: number = 1;
   pp: number = 1;
   constructor(private orderService: OrderService) {}
 

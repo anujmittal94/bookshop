@@ -1,28 +1,34 @@
 <div class="container py-3">
   <div class="card">
     <div class="card-body">
+      <div>
+        <mat-spinner *ngIf="showSpinner" class="m-auto"></mat-spinner>
+      </div>
+
       <ng-container *ngIf="(items | async)?.length == 0">
         <h4 class="card-title">Your Cart</h4>
         <div class="text-center">
           <img
-            src="/assets/images/emptyCart.png"
-            class="img-fluid w-25"
+            src="/assets/images/empty.png"
+            class="img-fluid w-25 border rounded border-4 border-warning p-3 m-1"
             alt="Empty Cart"
           />
-          <h4>Your cart is empty!</h4>
+          <h4 class="text-warning">Your cart is empty!</h4>
           <button class="btn btn-outline-success" [routerLink]="['/shop']">
             <mat-icon>add_shopping_cart</mat-icon>
           </button>
         </div>
       </ng-container>
-      <ng-container *ngIf="(items | async)?.length != 0">
+      <ng-container
+        *ngIf="(items | async)?.length != 0 && showSpinner == false"
+      >
         <div class="row mb-1">
-          <div class="col">
+          <div class="col-12 col-sm-6 col-md-4">
             <h4 class="card-title">Your Cart</h4>
           </div>
-          <div class="col">
+          <div class="col-sm-12 col-md-8">
             <div class="row mx-auto">
-              <div class="col text-end">
+              <div class="col-12 col-sm-3 text-end my-1">
                 <button
                   class="btn btn-sm btn-outline-danger w-100"
                   (click)="clearCart()"
@@ -31,7 +37,7 @@
                 </button>
               </div>
 
-              <div class="col text-end">
+              <div class="col-12 col-sm-3 text-end my-1">
                 <button
                   class="btn btn-sm btn-outline-success w-100"
                   routerLink="/"
@@ -40,15 +46,25 @@
                 </button>
               </div>
 
-              <div class="col text-end">
+              <div class="col-12 col-sm-6 text-end my-1">
                 <button
                   class="btn btn-sm btn-outline-warning w-100"
-                  [routerLink]="['/shop', 'checkout']"
+                  *ngIf="items | async as items"
+                  (click)="checkoutst(items)"
                 >
                   <mat-icon>shopping_cart_checkout</mat-icon>
                   <span class="text-nowrap"
-                    >(Total:
-                    {{ getTotal(items | async) | currency: "INR" }})</span
+                    >St(Total: {{ getTotal(items) | currency: "USD" }})</span
+                  >
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-warning w-100"
+                  *ngIf="items | async as items"
+                  (click)="checkoutrp(items)"
+                >
+                  <mat-icon>shopping_cart_checkout</mat-icon>
+                  <span class="text-nowrap"
+                    >Rp(Total: {{ getTotal(items) | currency: "USD" }})</span
                   >
                 </button>
               </div>
@@ -61,20 +77,20 @@
         >
           <div class="card-body">
             <div class="row mx-auto align-items-center">
-              <div class="col-1">
+              <div class="col-12 col-sm-2 col-md-1">
                 <span>{{ i + 1 }}.</span>
               </div>
-              <div class="col-lg-1 col-md-2 col-sm-3 col-4">
+              <div class="col-6 col-sm-5 col-md-2 mt-1">
                 <img
                   src="assets/{{ item.book.imageLink }}"
                   class="img-fluid"
                   alt="{{ item.book.title }}"
                 />
               </div>
-              <div class="col">
+              <div class="col-6 col-sm-5 col-md-3 mt-1">
                 <h5 class="card-title">{{ item.book.title }}</h5>
               </div>
-              <div class="col text-nowrap">
+              <div class="col-12 col-sm-4 col-md-2 text-nowrap mt-1">
                 <button
                   class="btn btn-sm btn-outline-none"
                   (click)="removeItemFromCart(item.book)"
@@ -89,12 +105,12 @@
                   <mat-icon>add_circle_outline</mat-icon>
                 </button>
               </div>
-              <div class="col">
+              <div class="col-6 col-sm-4 col-md-2 mt-1">
                 <span>{{
-                  item.quantity * item.book.price | currency: "INR"
+                  item.quantity * item.book.price | currency: "USD"
                 }}</span>
               </div>
-              <div class="col">
+              <div class="col-6 col-sm-4 col-md-2 mt-1">
                 <button
                   class="btn btn-sm btn-outline-danger"
                   (click)="removeAllItemFromCart(item.book)"

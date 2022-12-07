@@ -37,9 +37,7 @@ export class AuthGuard
     if (this.authService.isAuthenticated()) {
       return true;
     }
-    this.toastrService.warning(
-      'You do not have permission to access this page'
-    );
+    this.toastrService.warning('Please login to access this section.');
     this.router.navigate(['/login']);
     return false;
   }
@@ -76,9 +74,7 @@ export class AuthGuard
     if (this.authService.isAuthenticated()) {
       return true;
     }
-    this.toastrService.warning(
-      'You do not have permission to access this section'
-    );
+    this.toastrService.warning('Please login to access this section.');
     this.router.navigate(['/login']);
     return false;
   }

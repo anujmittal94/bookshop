@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { BookKey } from 'src/app/core/models/book-key.model';
-import { Book } from 'src/app/core/models/book.model';
 
 @Pipe({
   name: 'bookSearch',

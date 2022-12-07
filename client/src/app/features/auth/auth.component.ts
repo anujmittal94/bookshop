@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -17,14 +18,15 @@ export class AuthComponent implements OnInit {
   });
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
 
   onSubmit(): void {
-    this.authService
-      .loginUser(this.loginForm.value)
-      .subscribe((res) => console.log(res));
+    this.authService.loginUser(this.loginForm.value).subscribe(() => {
+      this.router.navigate(['/']);
+    });
   }
 }

@@ -50,7 +50,7 @@ export class BooksService {
   deleteBook(key: string): Observable<any> {
     return this.http
       .delete<Book>(`${environment.firebase_db_url}/books/${key}.json`)
-      .pipe(tap((_) => this.toastrService.success('Book Deleted')));
+      .pipe(tap((_) => this.toastrService.success(`Book ${key} Deleted`)));
   }
 
   // updateBook(book: Book): Observable<any> {
@@ -59,12 +59,12 @@ export class BooksService {
   updateBook(key: string, book: Book): Observable<any> {
     return this.http
       .put<Book>(`${environment.firebase_db_url}/books/${key}.json`, book)
-      .pipe(tap((_) => this.toastrService.success('Book Updated')));
+      .pipe(tap((_) => this.toastrService.success(`Book ${key} Updated`)));
   }
 
   createBook(book: Book): Observable<any> {
     return this.http
       .post<Book>(`${environment.firebase_db_url}/books.json`, book)
-      .pipe(tap((_) => this.toastrService.success('Book Created')));
+      .pipe(tap((key) => this.toastrService.success(`Book ${key} Created`)));
   }
 }

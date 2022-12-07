@@ -5,7 +5,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'shop', pathMatch: 'full' },
   {
-    path: 'auth',
+    path: 'login',
     loadChildren: () =>
       import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
