@@ -1,0 +1,9 @@
+.page-container{
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+.footer-container{
+  grid-row: 2 3;
+  margin-top: 1rem;
+}

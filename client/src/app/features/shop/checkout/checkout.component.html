@@ -1,0 +1,13 @@
+<div class="container-fluid row mt-3">
+  <div class="col-md-7 col-12">
+    <app-address (addressSubmitEvent)="addressSubmit($event)"></app-address>
+    <app-payment (paymentSubmitEvent)="paymentSubmit($event)"></app-payment>
+  </div>
+  <div class="col-md-5 col-12">
+    <app-cart-summary
+      [items]="items | async"
+      (checkoutEvent)="checkout($event)"
+    >
+    </app-cart-summary>
+  </div>
+</div>

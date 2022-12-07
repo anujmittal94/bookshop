@@ -1,0 +1,111 @@
+<div class="container py-3">
+  <div class="card">
+    <div class="card-body">
+      <ng-container *ngIf="(items | async)?.length == 0">
+        <h4 class="card-title">Your Cart</h4>
+        <div class="text-center">
+          <img
+            src="/assets/images/emptyCart.png"
+            class="img-fluid w-25"
+            alt="Empty Cart"
+          />
+          <h4>Your cart is empty!</h4>
+          <button class="btn btn-outline-success" [routerLink]="['/shop']">
+            <mat-icon>add_shopping_cart</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="(items | async)?.length != 0">
+        <div class="row mb-1">
+          <div class="col">
+            <h4 class="card-title">Your Cart</h4>
+          </div>
+          <div class="col">
+            <div class="row mx-auto">
+              <div class="col text-end">
+                <button
+                  class="btn btn-sm btn-outline-danger w-100"
+                  (click)="clearCart()"
+                >
+                  <mat-icon>remove_shopping_cart</mat-icon>
+                </button>
+              </div>
+
+              <div class="col text-end">
+                <button
+                  class="btn btn-sm btn-outline-success w-100"
+                  routerLink="/"
+                >
+                  <mat-icon>add_shopping_cart</mat-icon>
+                </button>
+              </div>
+
+              <div class="col text-end">
+                <button
+                  class="btn btn-sm btn-outline-warning w-100"
+                  [routerLink]="['/shop', 'checkout']"
+                >
+                  <mat-icon>shopping_cart_checkout</mat-icon>
+                  <span class="text-nowrap"
+                    >(Total:
+                    {{ getTotal(items | async) | currency: "INR" }})</span
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card text-center mb-3"
+          *ngFor="let item of items | async; let i = index"
+        >
+          <div class="card-body">
+            <div class="row mx-auto align-items-center">
+              <div class="col-1">
+                <span>{{ i + 1 }}.</span>
+              </div>
+              <div class="col-lg-1 col-md-2 col-sm-3 col-4">
+                <img
+                  src="assets/{{ item.book.imageLink }}"
+                  class="img-fluid"
+                  alt="{{ item.book.title }}"
+                />
+              </div>
+              <div class="col">
+                <h5 class="card-title">{{ item.book.title }}</h5>
+              </div>
+              <div class="col text-nowrap">
+                <button
+                  class="btn btn-sm btn-outline-none"
+                  (click)="removeItemFromCart(item.book)"
+                >
+                  <mat-icon>remove_circle_outline</mat-icon>
+                </button>
+                <span class="mx-2">{{ item.quantity }}</span>
+                <button
+                  class="btn btn-sm btn-outline-none"
+                  (click)="addItemToCart(item.book)"
+                >
+                  <mat-icon>add_circle_outline</mat-icon>
+                </button>
+              </div>
+              <div class="col">
+                <span>{{
+                  item.quantity * item.book.price | currency: "INR"
+                }}</span>
+              </div>
+              <div class="col">
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="removeAllItemFromCart(item.book)"
+                >
+                  <mat-icon>remove_shopping_cart</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

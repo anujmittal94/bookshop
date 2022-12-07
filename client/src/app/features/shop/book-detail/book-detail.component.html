@@ -1,0 +1,67 @@
+<ng-container *ngIf="book | async as book">
+  <div class="card m-3">
+    <div class="card-body">
+      <h4 class="card-title">{{ book?.title }}</h4>
+      <div class="mx-auto row w-75 align-items-center">
+        <div class="col">
+          <img
+            src="assets/{{ book?.imageLink }}"
+            class="img-fluid"
+            alt="{{ book?.title }}"
+          />
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col"><strong>Title</strong></div>
+            <div class="col">{{ book?.title }}</div>
+          </div>
+          <div class="row">
+            <div class="col"><strong>Author:</strong></div>
+            <div class="col">{{ book?.author }}</div>
+          </div>
+          <div class="row">
+            <div class="col"><strong>Year Published:</strong></div>
+            <div class="col">{{ book?.year }}</div>
+          </div>
+          <div class="row">
+            <div class="col"><strong>Country of Origin:</strong></div>
+            <div class="col">{{ book?.country }}</div>
+          </div>
+          <div class="row">
+            <div class="col"><strong>Language</strong></div>
+            <div class="col">{{ book?.language }}</div>
+          </div>
+          <div class="row">
+            <div class="col"><strong>Number of Pages:</strong></div>
+            <div class="col">{{ book?.pages }}</div>
+          </div>
+          <div class="row">
+            <div class="col"><strong>Wikipedia</strong></div>
+            <div class="col">
+              <a href="{{ book?.link }}" target="_blank">{{ book?.link }}</a>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col"><strong>Price:</strong></div>
+            <div class="col">{{ book?.price | currency: "INR" }}</div>
+          </div>
+          <div class="row">
+            <div class="col text-end">
+              <button class="btn btn-outline-success" (click)="onAdd(book)">
+                Add to Cart
+              </button>
+            </div>
+            <div class="col">
+              <button
+                class="btn btn-outline-warning"
+                [routerLink]="['/shop', 'cart']"
+              >
+                Go to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

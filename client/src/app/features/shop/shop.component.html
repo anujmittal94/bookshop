@@ -1,0 +1,49 @@
+<app-banners></app-banners>
+<div class="card mx-3">
+  <div class="card-body">
+    <div
+      class="container-fluid d-flex justify-content-between align-items-center mb-2"
+    >
+      <h4 class="card-title">Browse Items</h4>
+      <button
+        class="btn btn-sm btn-outline-warning"
+        [routerLink]="['checkout']"
+      >
+        <mat-icon>shopping_cart_checkout</mat-icon>
+      </button>
+    </div>
+    <div class="input-group">
+      <span class="input-group-text bg-light">
+        <mat-icon>search</mat-icon>
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        id="InputSearch"
+        placeholder="Enter search term"
+        [(ngModel)]="searchTerm"
+      />
+    </div>
+    <div class="container row mx-auto py-3 g-3">
+      <pagination-controls
+        (pageChange)="p = $event"
+        class="text-center"
+      ></pagination-controls>
+      <div
+        class="col-lg-2 col-md-3 col-sm-6 col-12"
+        *ngFor="
+          let book of books
+            | async
+            | bookSearch: searchTerm
+            | paginate: { itemsPerPage: 12, currentPage: p }
+        "
+      >
+        <app-book-card [book]="book"></app-book-card>
+      </div>
+      <pagination-controls
+        (pageChange)="p = $event"
+        class="text-center"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>

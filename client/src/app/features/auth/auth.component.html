@@ -1,0 +1,66 @@
+<div class="container-fluid wrapper">
+  <div class="row justify-content-center align-items-center h-100">
+    <div class="card col-10 col-sm-8 col-md-6 col-lg-4">
+      <div class="card-body">
+        <h4 class="card-title">Login</h4>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-1">
+            <label class="col-3 col-form-label text-nowrap" for="InputEmail"
+              >Email :</label
+            >
+            <div class="col-9">
+              <input
+                type="text"
+                formControlName="email"
+                class="form-control"
+                id="InputEmail"
+                placeholder="Email"
+              />
+              <small
+                *ngIf="
+                  !loginForm.get('email')?.valid &&
+                  loginForm.get('email')?.touched
+                "
+                class="form-text text-danger w-100"
+                >Please enter a valid email.</small
+              >
+            </div>
+          </div>
+
+          <div class="row mb-1">
+            <label class="col-3 col-form-label text-nowrap" for="InputPassword"
+              >Password :</label
+            >
+            <div class="col-9">
+              <input
+                type="password"
+                formControlName="password"
+                class="form-control"
+                id="InputPassword"
+                placeholder="Password"
+              />
+              <small
+                *ngIf="
+                  !loginForm.get('password')?.valid &&
+                  loginForm.get('password')?.touched
+                "
+                class="form-text text-danger w-100"
+                >Please enter a valid password.</small
+              >
+            </div>
+          </div>
+
+          <div class="row mt-3 justify-content-end">
+            <button
+              type="submit"
+              class="btn btn-sm btn-outline-dark col-sm-2 col-3 mx-1"
+              [disabled]="!loginForm.valid"
+            >
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

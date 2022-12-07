@@ -1,0 +1,137 @@
+<div class="card mx-auto mb-1">
+  <div class="card-body">
+    <h4 class="card-title">Payment</h4>
+    <ng-container *ngIf="submitted; else form">
+      <mat-icon>check</mat-icon>
+    </ng-container>
+    <ng-template #form>
+      <div class="d-flex align-items-start">
+        <div
+          class="nav flex-column nav-pills me-3"
+          id="v-pills-tab"
+          role="tablist"
+        >
+          <button
+            class="nav-link active"
+            id="cardTab"
+            data-bs-toggle="pill"
+            data-bs-target="#cardTabForm"
+            type="button"
+            role="tab"
+          >
+            Credit/Debit Card
+          </button>
+          <button
+            class="nav-link"
+            id="codTab"
+            data-bs-toggle="pill"
+            data-bs-target="#codTabForm"
+            type="button"
+            role="tab"
+          >
+            Cash On Delivery
+          </button>
+        </div>
+        <div class="tab-content" id="v-pills-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="cardTabForm"
+            role="tabpanel"
+          >
+            <form [formGroup]="cardForm">
+              <input
+                type="text"
+                id="InputName"
+                class="form-control mb-1"
+                placeholder="Card Owner's Name"
+                formControlName="name"
+              />
+              <span class="form-text text-danger" *ngIf=""
+                >This field should not be empty</span
+              >
+              <input
+                type="number"
+                id="InputNumber"
+                class="form-control mb-1"
+                placeholder="Card Number"
+                formControlName="number"
+              />
+
+              <span class="form-text text-danger" *ngIf=""
+                >Enter valid the card number</span
+              >
+              <div class="row mx-auto">
+                <div class="col ps-0">
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      id="InputMonth"
+                      class="form-control"
+                      placeholder="MM"
+                      required
+                      formControlName="month"
+                    />
+                    <span class="form-text text-danger" *ngIf=""
+                      >*Required</span
+                    >
+
+                    <input
+                      type="number"
+                      id="InputYear"
+                      class="form-control"
+                      placeholder="YY"
+                      formControlName="year"
+                    />
+                  </div>
+                </div>
+                <div class="col pe-0">
+                  <input
+                    type="text"
+                    id="InputCVV"
+                    class="form-control"
+                    placeholder="CVV"
+                    formControlName="cvv"
+                  />
+                </div>
+              </div>
+              <div class="my-3">
+                <button type="submit" class="btn btn-outline-dark" disabled>
+                  Confirm (Currently Unavailable)
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="codTabForm" role="tabpanel">
+            <h4>Cash On Delivery</h4>
+            <form [formGroup]="codForm" (ngSubmit)="onSubmit()">
+              <!-- <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="codY"
+                  value="y"
+                  formControlName="cod"
+                />
+                <label class="form-check-label" for="codY"> Yes </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="codN"
+                  value="n"
+                  formControlName="cod"
+                  checked
+                />
+                <label class="form-check-label" for="codN"> No </label>
+              </div> -->
+              <button type="submit" class="btn btn-outline-dark">
+                I confirm I will pay cash on delivery!
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

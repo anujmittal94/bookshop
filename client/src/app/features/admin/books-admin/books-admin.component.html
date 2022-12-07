@@ -1,0 +1,82 @@
+<div class="container-fluid text-end">
+  <button class="btn btn-sm btn-outline-dark my-3" (click)="openForm()">
+    <ng-container *ngIf="openFormStatus; else closeForm">
+      <mat-icon>close</mat-icon>
+    </ng-container>
+    <ng-template #closeForm>
+      <mat-icon>add</mat-icon>
+    </ng-template>
+  </button>
+</div>
+
+<ng-container *ngIf="openFormStatus">
+  <app-book-form
+    [book]="bookToEdit"
+    [editBookStatus]="editBookStatus"
+    (formSubmitEvent)="formSubmitComplete()"
+  ></app-book-form>
+</ng-container>
+
+<div class="container-fluid">
+  <table class="table table-sm table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="5">
+          <div class="input-group">
+            <span class="input-group-text bg-light"
+              ><mat-icon>search</mat-icon></span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="InputSearch"
+              placeholder="Enter search term"
+              [(ngModel)]="searchTerm"
+            />
+          </div>
+        </td>
+      </tr>
+      <tr
+        *ngFor="
+          let book of books
+            | async
+            | bookSearch: searchTerm
+            | paginate: { itemsPerPage: 5, currentPage: p }
+        "
+      >
+        <td>{{ book.key }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.price }}</td>
+        <td class="text-end">
+          <button
+            class="btn btn-sm btn-outline-success mx-1"
+            type="button"
+            (click)="editBook(book)"
+          >
+            <mat-icon>mode_edit</mat-icon>
+          </button>
+          <button
+            class="btn btn-sm btn-outline-danger mx-1"
+            (click)="deleteBook(book.key)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls
+    (pageChange)="p = $event"
+    class="text-center"
+  ></pagination-controls>
+</div>

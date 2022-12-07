@@ -1,0 +1,31 @@
+<header>
+  <nav class="navbar navbar-expand-sm bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" [routerLink]="['']">The Bookshop</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#menu"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menu">
+        <div class="navbar-nav">
+          <a class="nav-link" [routerLink]="['/shop']">Shop</a>
+          <ng-container *ngIf="isAuthenticated()">
+            <a class="nav-link" [routerLink]="['/admin']">Admin</a>
+            <a class="nav-link" [routerLink]="['/']" (click)="logoutUser()"
+              >Logout</a
+            >
+          </ng-container>
+        </div>
+      </div>
+      <button class="btn btn-sm btn-outline-dark">
+        <a [routerLink]="['shop', 'cart']">
+          <mat-icon [matBadge]="totalItems">shopping_cart</mat-icon></a
+        >
+      </button>
+    </div>
+  </nav>
+</header>

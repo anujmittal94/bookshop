@@ -1,0 +1,31 @@
+<div class="card shadow-sm h-100">
+  <img
+    src="assets/{{ book?.imageLink }}"
+    class="card-img-top"
+    alt="{{ book?.title }}"
+  />
+  <div class="card-body">
+    <h5 class="text-muted">{{ book?.title }}</h5>
+    <div class="d-flex justify-content-between"></div>
+    <h6 class="text-muted">{{ book?.author }}</h6>
+    <h6 class="text-muted">
+      <mat-icon class="info-link" [routerLink]="[book?.key]"
+        >information</mat-icon
+      >
+    </h6>
+  </div>
+  <div class="row align-items-center card-footer bg-transparent">
+    <div class="col-6">
+      <span class="card-subtitle">{{ book?.price | currency: "INR" }}</span>
+    </div>
+    <div class="col-6 text-end">
+      <button
+        *ngIf="book"
+        class="btn btn-sm btn-outline-success"
+        (click)="addItemToCart(book)"
+      >
+        <mat-icon>add_shopping_cart</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

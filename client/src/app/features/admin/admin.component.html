@@ -1,0 +1,34 @@
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link active"
+      id="home-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#books"
+      type="button"
+      role="tab"
+    >
+      Books
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link"
+      id="profile-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#orders"
+      type="button"
+      role="tab"
+    >
+      Orders
+    </button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="books" role="tabpanel">
+    <app-books-admin></app-books-admin>
+  </div>
+  <div class="tab-pane fade" id="orders" role="tabpanel">
+    <app-orders-admin></app-orders-admin>
+  </div>
+</div>

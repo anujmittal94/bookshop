@@ -1,0 +1,179 @@
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link active"
+      id="home-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#porders"
+      type="button"
+      role="tab"
+    >
+      Pending Orders
+    </button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button
+      class="nav-link"
+      id="profile-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#corders"
+      type="button"
+      role="tab"
+    >
+      Completed Orders
+    </button>
+  </li>
+</ul>
+<div class="tab-content mt-3" id="myNestedTabContent">
+  <div class="tab-pane fade show active" id="porders" role="tabpanel">
+    <div class="container-fluid">
+      <table class="table table-sm table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Date</th>
+            <th>COD</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let order of pendingOrders | async">
+            <tr>
+              <td>{{ order.key }}</td>
+              <td>{{ order.date }}</td>
+              <td>{{ order.cod }}</td>
+              <td class="text-end">
+                <button
+                  class="btn btn-sm btn-outline-success mx-1"
+                  type="button"
+                  (click)="completeOrder(order)"
+                >
+                  <mat-icon>check</mat-icon>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-primary mx-1"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  [attr.data-bs-target]="'#details' + order.key"
+                >
+                  <mat-icon>information</mat-icon>
+                </button>
+              </td>
+            </tr>
+            <tr id="details{{ order.key }}" class="collapse">
+              <td colspan="4">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Address</strong> <br />{{ order.address.name }}
+                    {{ order.address.mobile }} <br />{{
+                      order.address.address
+                    }}
+                    <br />{{ order.address.city }} {{ order.address.state }}
+                    <br />{{ order.address.pin }}
+                  </div>
+                  <div><strong>Price</strong><br />{{ order.price }}</div>
+                </div>
+                <table class="table table-sm table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Key</th>
+                      <th>Title</th>
+                      <th>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let item of order.items">
+                      <tr>
+                        <td>{{ item.key }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.quantity }}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <pagination-controls
+        (pageChange)="pp = $event"
+        class="text-center"
+      ></pagination-controls>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="corders" role="tabpanel">
+    <div class="container-fluid">
+      <table class="table table-sm table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Date</th>
+            <th>COD</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let order of completedOrders | async">
+            <tr>
+              <td>{{ order.key }}</td>
+              <td>{{ order.date }}</td>
+              <td>{{ order.cod }}</td>
+              <td class="text-end">
+                <button
+                  class="btn btn-sm btn-outline-primary mx-1"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  [attr.data-bs-target]="'#details' + order.key"
+                >
+                  <mat-icon>information</mat-icon>
+                </button>
+              </td>
+            </tr>
+            <tr id="details{{ order.key }}" class="collapse">
+              <td colspan="4">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Address</strong> <br />{{ order.address.name }}
+                    {{ order.address.mobile }} <br />{{
+                      order.address.address
+                    }}
+                    <br />{{ order.address.city }} {{ order.address.state }}
+                    <br />{{ order.address.pin }}
+                  </div>
+                  <div><strong>Price</strong><br />{{ order.price }}</div>
+                </div>
+                <table class="table table-sm table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Key</th>
+                      <th>Title</th>
+                      <th>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let item of order.items">
+                      <tr>
+                        <td>{{ item.key }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.quantity }}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <pagination-controls
+        (pageChange)="pc = $event"
+        class="text-center"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="collapse" id="details_{{order.key}}">
+  {{order.key}}
+</div> -->

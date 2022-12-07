@@ -1,0 +1,172 @@
+<div class="card mx-auto mb-1">
+  <div class="card-body">
+    <h4 class="card-title">Shipping Details</h4>
+    <ng-container *ngIf="submitted; else form">
+      <mat-icon>check</mat-icon>
+    </ng-container>
+    <ng-template #form>
+      <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col">
+            <label for="InputFirst" class="form-label">First Name*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="InputFirst"
+              formControlName="first"
+            />
+            <small
+              *ngIf="
+                !addressForm.get('first')?.valid &&
+                addressForm.get('first')?.touched
+              "
+              class="form-text text-danger w-100"
+              >Please enter a first name.</small
+            >
+          </div>
+          <div class="col">
+            <label for="InputLast" class="form-label">Last Name*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="InputLast"
+              formControlName="last"
+            />
+            <small
+              *ngIf="
+                !addressForm.get('last')?.valid &&
+                addressForm.get('last')?.touched
+              "
+              class="form-text text-danger w-100"
+              >Please enter a last name.</small
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col mb-1">
+            <label for="InputMobile" class="form-label">Mobile number*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="InputMobile"
+              formControlName="mobile"
+            />
+            <small
+              *ngIf="
+                !addressForm.get('mobile')?.valid &&
+                addressForm.get('mobile')?.touched
+              "
+              class="form-text text-danger w-100"
+              >Please enter a mobile number.</small
+            >
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col mb-1">
+            <label for="InputAddress" class="form-label"
+              >Flat No., Building*</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="InputAddress"
+              formControlName="address1"
+            />
+            <small
+              *ngIf="
+                !addressForm.get('address1')?.valid &&
+                addressForm.get('address1')?.touched
+              "
+              class="form-text text-danger w-100"
+              >Please enter an address</small
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-1">
+            <label for="InputAddress2" class="form-label">Street, Area</label>
+            <input
+              type="text"
+              class="form-control"
+              id="InputAddress2"
+              formControlName="address2"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="InputCity" class="form-label">Town/City*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="InputCity"
+              formControlName="city"
+            />
+            <small
+              *ngIf="
+                !addressForm.get('city')?.valid &&
+                addressForm.get('city')?.touched
+              "
+              class="form-text text-danger w-100"
+              >Please enter a town/city.</small
+            >
+          </div>
+          <div class="col">
+            <label for="InputState" class="form-label">State*</label>
+            <select class="form-select" id="InputState" formControlName="state">
+              <option selected></option>
+              <option *ngFor="let state of states">{{ state }}</option>
+            </select>
+            <small
+              *ngIf="
+                !addressForm.get('state')?.valid &&
+                addressForm.get('state')?.touched
+              "
+              class="form-text text-danger w-100"
+              >Please select a state/union territory.</small
+            >
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="InputAddress3" class="form-label">Landmark</label>
+            <input
+              type="text"
+              class="form-control"
+              id="InputAddress3"
+              formControlName="address3"
+            />
+          </div>
+          <div class="col">
+            <label for="InputPin" class="form-label">PIN Code*</label>
+            <input
+              type="number"
+              class="form-control"
+              id="InputPin"
+              formControlName="pin"
+            />
+            <small
+              *ngIf="
+                !addressForm.get('pin')?.valid &&
+                addressForm.get('pin')?.touched
+              "
+              class="form-text text-danger w-100"
+              >Please enter a pin code.</small
+            >
+          </div>
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-dark"
+            type="submit"
+            [disabled]="!addressForm.valid"
+          >
+            Confirm
+          </button>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+</div>
