@@ -6,6 +6,8 @@ import { CartService } from 'src/app/core/services/cart.service';
 import { loadStripe } from '@stripe/stripe-js';
 import { environment } from 'src/environments/environment';
 import { PgsService } from 'src/app/core/services/pgs.service';
+import { Router } from '@angular/router';
+import { BooksService } from 'src/app/core/services/books.service';
 
 @Component({
   selector: 'app-cart',
@@ -14,15 +16,18 @@ import { PgsService } from 'src/app/core/services/pgs.service';
 })
 export class CartComponent implements OnInit, OnChanges {
   items?: Observable<CartItem[]>;
-  showSpinner: boolean = false;
+  // showSpinner: boolean = false;
 
   constructor(
     private cartService: CartService,
-    private pgsService: PgsService
+    private pgsService: PgsService,
+    private booksService: BooksService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.items = this.cartService.cart;
+    this.cartService.validateCart().subscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -45,25 +50,27 @@ export class CartComponent implements OnInit, OnChanges {
     this.cartService.clearCart();
   }
 
-  getTotal(items: CartItem[] | null): number {
-    if (items) {
-      return this.cartService.getTotal(items);
+  getTotal(): number {
+    if (this.items) {
+      return this.cartService.getTotal();
     }
     return 0;
   }
 
-  checkoutst(items: CartItem[]) {
-    this.showSpinner = true;
-    this.pgsService.checkoutst(items).subscribe(async (res: any) => {
-      let stripe = await loadStripe(environment.stripe_public);
-      stripe?.redirectToCheckout({
-        sessionId: res.id,
-      });
-      console.log(res);
-      this.showSpinner = false;
-    });
-  }
+  // checkoutst(items: CartItem[]) {
+  //   this.showSpinner = true;
+  //   this.pgsService.checkoutst(items).subscribe(async (res: any) => {
+  //     let stripe = await loadStripe(environment.stripe_public);
+  //     stripe?.redirectToCheckout({
+  //       sessionId: res.id,
+  //     });
+  //     console.log(res);
+  //     this.showSpinner = false;
+  //   });
+  // }
   checkoutrp(items: CartItem[]) {
-    this.pgsService.checkoutrp();
+    //this.pgsService.checkoutrp(items);
+    this.cartService.validateCart().subscribe();
+    this.router.navigate(['/shop', 'checkout']);
   }
 }

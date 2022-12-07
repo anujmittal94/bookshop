@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Address } from 'src/app/core/models/address.model';
 
@@ -8,6 +8,7 @@ import { Address } from 'src/app/core/models/address.model';
   styleUrls: ['./address.component.scss'],
 })
 export class AddressComponent implements OnInit {
+  @Input() address?: Address;
   addressForm: FormGroup = this.formBuilder.group({
     first: ['', Validators.required],
     last: ['', Validators.required],
@@ -24,7 +25,6 @@ export class AddressComponent implements OnInit {
     new EventEmitter<Address>();
   constructor(private formBuilder: FormBuilder) {}
 
-  submitted: boolean = false;
   states: string[] = [
     'Arunachal Pradesh',
     'Assam',
@@ -63,26 +63,24 @@ export class AddressComponent implements OnInit {
     'Ladakh',
   ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.address) {
+      this.addressForm.patchValue({
+        first: this.address.first,
+        last: this.address.last,
+        mobile: this.address.mobile,
+        address1: this.address.address1,
+        address2: this.address.address2,
+        city: this.address.city,
+        state: this.address.state,
+        address3: this.address.address3,
+        pin: this.address.pin,
+      });
+    }
+  }
 
   onSubmit(): void {
-    let address: Address = {
-      name:
-        this.addressForm.controls['first'].value +
-        ' ' +
-        this.addressForm.controls['last'].value,
-      mobile: this.addressForm.controls['mobile'].value,
-      address:
-        this.addressForm.controls['address1'].value +
-        '\n' +
-        this.addressForm.controls['address2'].value +
-        '\n' +
-        this.addressForm.controls['address3'].value,
-      city: this.addressForm.controls['city'].value,
-      state: this.addressForm.controls['state'].value,
-      pin: this.addressForm.controls['pin'].value,
-    };
+    let address: Address = this.addressForm.value;
     this.addressSubmitEvent.emit(address);
-    this.submitted = true;
   }
 }

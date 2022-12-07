@@ -18,11 +18,30 @@ export class PgsService {
     return _window();
   }
 
-  checkoutst(items: CartItem[]): Observable<any> {
-    return this.http.post('http://localhost:4242/checkout', { items: items });
+  // checkoutst(items: CartItem[]): Observable<any> {
+  //   return this.http.post('http://localhost:4242/checkout', { items: items });
+  // }
+
+  checkoutrp(items: CartItem[]) {
+    return this.http
+      .post('http://localhost:4242/createOrder2', items)
+      .subscribe((res) => console.log(res));
   }
 
-  checkoutrp() {
-    console.log('rp');
+  // createOrder() {
+  //   var options = {
+  //     amount: '39900',
+  //     currency: 'INR',
+  //     receipt: 'somerecno2',
+  //     notes: {
+  //       description: 'apples',
+  //     },
+  //   };
+
+  //   return this.http.post('http://localhost:4242/createOrder', options);
+  // }
+
+  createOrder(items: CartItem[]): Observable<any> {
+    return this.http.post('http://localhost:4242/createOrder', items);
   }
 }

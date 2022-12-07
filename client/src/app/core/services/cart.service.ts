@@ -1,20 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, tap, Observable, forkJoin } from 'rxjs';
 import { ShortTitlePipe } from 'src/app/shared/pipes/short-title.pipe';
 import { BookKey } from '../models/book-key.model';
 import { CartItem } from '../models/cart.model';
+import { BooksService } from './books.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
   cart = new BehaviorSubject<CartItem[]>([]);
+  cartIsEmpty: boolean = this.cart.value.length > 0;
 
   constructor(
     private toastrService: ToastrService,
     private shortTitlePipe: ShortTitlePipe,
+    private bookService: BooksService,
     private http: HttpClient
   ) {}
 
@@ -23,6 +26,35 @@ export class CartService {
       const items = JSON.parse(localStorage.getItem('items')!);
       this.cart.next(items);
     }
+  }
+
+  validateCart(): Observable<any> {
+    const items: CartItem[] = [...this.cart.value];
+    let updates: Observable<any>[] = [];
+    let updated: boolean = false;
+    for (let item of items) {
+      updates.push(
+        this.bookService.getBookByKey(item.book.key).pipe(
+          tap((book: BookKey) => {
+            if (JSON.stringify(item.book) != JSON.stringify(book)) {
+              item.book = book;
+              updated = true;
+            }
+          })
+        )
+      );
+    }
+    return forkJoin(updates).pipe(
+      tap((_) => {
+        this.cart.next(items);
+        localStorage.setItem('items', JSON.stringify(items));
+        if (updated) {
+          this.toastrService.warning(
+            'Some details may have been updated, please review.'
+          );
+        }
+      })
+    );
   }
 
   addItemToCart(book: BookKey) {
@@ -81,8 +113,8 @@ export class CartService {
     this.toastrService.success('Cart cleared');
   }
 
-  getTotal(items: CartItem[]) {
-    return items
+  getTotal() {
+    return this.cart.value
       ?.map((item) => item.book.price * item.quantity)
       .reduce((prev, current) => prev + current, 0);
   }

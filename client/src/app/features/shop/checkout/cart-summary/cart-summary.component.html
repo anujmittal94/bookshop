@@ -1,6 +1,13 @@
 <div class="container-fluid card mx-auto mb-1">
   <div class="card-body"></div>
   <h4 class="card-title">Summary</h4>
+  <div class="row">
+    <div class="col-2 mb-1"></div>
+    <div class="col-4 mb-1">Title</div>
+    <div class="col-2 mb-1">No.</div>
+    <div class="col-2 mb-1">Unit</div>
+    <div class="col-2 mb-1">Total</div>
+  </div>
   <div class="row" *ngFor="let item of items">
     <div class="col-2 mb-1">
       <img
@@ -14,11 +21,37 @@
     <div class="col-2 mb-1">{{ item.book.price }}</div>
     <div class="col-2 mb-1">{{ item.book.price * item.quantity }}</div>
   </div>
-  <div>
-    <button class="btn btn-outline-warning my-3" (click)="onSubmit(items)">
+  <div *ngIf="address; else noaddress">
+    <div class="my-3">
+      <span class="fw-bold">Shipping Details</span>
+      <button
+        class="btn btn-outline-success btn-sm mx-3"
+        (click)="editAddress()"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <app-display-address [address]="address"></app-display-address>
+    </div>
+  </div>
+  <ng-template #noaddress>
+    <span class="m-auto fw-bold">Please provide shipping details!</span>
+  </ng-template>
+  <ul class="list-group list-group-flush mt-3">
+    <li class="list-group-item d-flex justify-content-between">
+      <span>Subtotal</span>
+      <span>{{ getTotal() | currency: "INR" }}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between">
+      <strong class="fs-5">Total</strong>
+      <strong class="fs-5">{{ getTotal() | currency: "INR" }}</strong>
+    </li>
+  </ul>
+
+  <div *ngIf="address" class="text-end">
+    <button class="btn btn-outline-warning my-3" (click)="payment(items)">
       <mat-icon>shopping_cart_checkout</mat-icon>
       <span class="text-nowrap"
-        >(Total: {{ getTotal(items) | currency: "INR" }})</span
+        >Pay (Total: {{ getTotal() | currency: "INR" }})</span
       >
     </button>
   </div>

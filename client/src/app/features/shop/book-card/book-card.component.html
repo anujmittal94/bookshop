@@ -9,20 +9,21 @@
       class="text-muted book-title"
       data-bs-toggle="tooltip"
       [title]="book?.title"
+      [routerLink]="[book?.key]"
     >
       {{ book?.title | shortTitle }}
     </h5>
     <div class="d-flex justify-content-between"></div>
     <h6 class="text-muted">{{ book?.author | default: "Unknown" }}</h6>
-    <h6 class="text-muted">
+    <!-- <h6 class="text-muted">
       <mat-icon class="info-link" [routerLink]="[book?.key]"
         >information</mat-icon
       >
-    </h6>
+    </h6> -->
   </div>
   <div class="row align-items-center card-footer bg-transparent">
     <div class="col-6">
-      <span class="card-subtitle">{{ book?.price | currency: "USD" }}</span>
+      <span class="card-subtitle">{{ book?.price | currency: "INR" }}</span>
     </div>
     <div class="col-6 text-end">
       <button

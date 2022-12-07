@@ -1,8 +1,11 @@
 export interface Address {
-  name: string;
+  first: string;
+  last: string;
   mobile: string;
-  address: string;
+  address1: string;
+  address2: string;
   city: string;
   state: string;
+  address3: string;
   pin: string;
 }

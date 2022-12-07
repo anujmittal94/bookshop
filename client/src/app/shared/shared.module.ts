@@ -13,6 +13,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { BookSearchPipe } from './pipes/book-search.pipe';
 import { ShortTitlePipe } from './pipes/short-title.pipe';
 import { DefaultPipe } from './pipes/default.pipe';
+import { DisplayAddressComponent } from './components/display-address/display-address.component';
 
 const modules = [
   RouterModule,
@@ -25,9 +26,15 @@ const material = [MatIconModule, MatBadgeModule, MatProgressSpinnerModule];
 
 const pipes = [BookSearchPipe, ShortTitlePipe, DefaultPipe];
 
+const components = [DisplayAddressComponent];
 @NgModule({
-  declarations: [BookSearchPipe, ShortTitlePipe, DefaultPipe],
+  declarations: [
+    BookSearchPipe,
+    ShortTitlePipe,
+    DefaultPipe,
+    DisplayAddressComponent,
+  ],
   imports: [CommonModule],
-  exports: [...modules, ...material, ...pipes],
+  exports: [...modules, ...material, ...pipes, ...components],
 })
 export class SharedModule {}

@@ -1,5 +1,5 @@
 <ng-container *ngIf="book | async as book">
-  <div class="card m-3">
+  <div class="container card m-auto mt-3">
     <div class="card-body">
       <h4 class="card-title">{{ book?.title }}</h4>
       <div class="mx-auto row w-75 align-items-center">
@@ -45,7 +45,7 @@
             </div>
             <div class="row mb-3">
               <div class="col"><strong>Price:</strong></div>
-              <div class="col">{{ book?.price | currency: "USD" }}</div>
+              <div class="col">{{ book?.price | currency: "INR" }}</div>
             </div>
             <div class="row">
               <div class="col text-end">

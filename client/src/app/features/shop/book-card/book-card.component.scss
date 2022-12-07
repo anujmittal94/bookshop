@@ -1,6 +1,11 @@
 .card{
   min-height: 100%;
 }
+
+.book-title:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
 .card-img-top{
   width: auto;
   max-height: 30vh;
@@ -12,9 +17,9 @@
   border: none;
 }
 
-.info-link{
-  cursor: pointer;
-}
+// .info-link{
+//   cursor: pointer;
+// }
 
 @media (max-width:992px) {
   .card-img-top{

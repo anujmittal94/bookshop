@@ -11,7 +11,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './checkout/success/success.component';
 import { CancelComponent } from './checkout/cancel/cancel.component';
-import { TestComponent } from './test/test.component';
+import { AddressComponent } from './checkout/address/address.component';
+import { PaymentComponent } from './checkout/payment/payment.component';
+import { CartSummaryComponent } from './checkout/cart-summary/cart-summary.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { TestComponent } from './test/test.component';
     CheckoutComponent,
     SuccessComponent,
     CancelComponent,
-    TestComponent,
+    AddressComponent,
+    PaymentComponent,
+    CartSummaryComponent,
   ],
   imports: [CommonModule, ShopRoutingModule, SharedModule],
 })
